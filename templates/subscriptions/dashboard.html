@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mb-3">Dashboard</h1>
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card"><div class="card-body"><h6>Monthly Cost</h6><p class="metric">${{ monthly_total }}</p></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><h6>Annual Projection</h6><p class="metric">${{ annual_projection }}</p></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><h6>5-Year Forecast</h6><p class="metric">${{ five_year_projection }}</p></div></div></div>
+  <div class="col-md-3"><div class="card"><div class="card-body"><h6>Potential Waste (This Month)</h6><p class="metric">${{ wasted_spend }}</p></div></div></div>
+</div>
+
+<div class="d-flex gap-2 mb-3">
+  <a href="{% url 'subscription_create' %}" class="btn btn-primary">Add Subscription</a>
+  <a href="{% url 'run_reminders' %}" class="btn btn-outline-warning">Run Billing Reminders</a>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h4>Upcoming Billing</h4>
+    <ul class="list-group">
+      {% for sub in upcoming %}
+      <li class="list-group-item d-flex justify-content-between"><span>{{ sub.service_name }}</span><span>{{ sub.billing_date }}</span></li>
+      {% empty %}<li class="list-group-item">No upcoming billing entries.</li>{% endfor %}
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <h4>Trials Ending Soon</h4>
+    <ul class="list-group">
+      {% for sub in trials %}
+      <li class="list-group-item d-flex justify-content-between"><span>{{ sub.service_name }}</span><span>{{ sub.trial_end_date }}</span></li>
+      {% empty %}<li class="list-group-item">No active trials.</li>{% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

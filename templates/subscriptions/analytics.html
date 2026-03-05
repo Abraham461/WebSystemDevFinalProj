@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Spending Analytics</h2>
+<canvas id="spendingChart" height="100"></canvas>
+{% endblock %}
+{% block scripts %}
+<script>
+const ctx = document.getElementById('spendingChart');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: {{ labels|safe }},
+    datasets: [{
+      label: 'Cost by subscription',
+      data: {{ amounts|safe }},
+      borderWidth: 1
+    }]
+  }
+});
+</script>
+{% endblock %}

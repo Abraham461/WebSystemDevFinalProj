@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3"><h2>Subscriptions</h2><a href="{% url 'subscription_create' %}" class="btn btn-primary">New</a></div>
+<table class="table table-striped">
+<thead><tr><th>Service</th><th>Category</th><th>Amount</th><th>Cycle</th><th>Status</th><th>Billing Date</th><th></th></tr></thead>
+<tbody>
+{% for sub in subscriptions %}
+<tr>
+<td>{{ sub.service_name }}</td><td>{{ sub.category|default:'-' }}</td><td>${{ sub.amount }}</td><td>{{ sub.get_billing_cycle_display }}</td><td>{{ sub.get_status_display }}</td><td>{{ sub.billing_date }}</td>
+<td><a href="{% url 'subscription_update' sub.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a> <a href="{% url 'usage_entry' sub.pk %}" class="btn btn-sm btn-outline-info">Usage</a> <a href="{% url 'subscription_delete' sub.pk %}" class="btn btn-sm btn-outline-danger">Delete</a></td>
+</tr>
+{% empty %}<tr><td colspan="7">No subscriptions yet.</td></tr>{% endfor %}
+</tbody></table>
+{% endblock %}
