@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3"><h2>Categories</h2><a href="{% url 'category_create' %}" class="btn btn-primary">New</a></div>
+<ul class="list-group">
+{% for cat in categories %}
+<li class="list-group-item"><strong>{{ cat.name }}</strong> — {{ cat.description }}</li>
+{% empty %}<li class="list-group-item">No categories yet.</li>{% endfor %}
+</ul>
+{% endblock %}
